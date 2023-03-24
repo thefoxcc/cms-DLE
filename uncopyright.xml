@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dleplugin>
+	<name>Uncopyright</name>
+	<description>Убираем все авторские права/упонинания DLE</description>
+	<icon></icon>
+	<version>1</version>
+	<dleversion>14.3</dleversion>
+	<versioncompare>==</versioncompare>
+	<upgradeurl></upgradeurl>
+	<filedelete>0</filedelete>
+	<needplugin></needplugin>
+	<mnotice>0</mnotice>
+	<mysqlinstall><![CDATA[]]></mysqlinstall>
+	<mysqlupgrade><![CDATA[]]></mysqlupgrade>
+	<mysqlenable><![CDATA[]]></mysqlenable>
+	<mysqldisable><![CDATA[]]></mysqldisable>
+	<mysqldelete><![CDATA[]]></mysqldelete>
+	<phpinstall><![CDATA[]]></phpinstall>
+	<phpupgrade><![CDATA[]]></phpupgrade>
+	<phpenable><![CDATA[]]></phpenable>
+	<phpdisable><![CDATA[]]></phpdisable>
+	<phpdelete><![CDATA[]]></phpdelete>
+	<notice><![CDATA[]]></notice>
+	<file name="engine/engine.php">
+		<operation action="replace">
+			<searchcode><![CDATA[<meta name="generator" content="DataLife Engine (http://dle-news.ru)">]]></searchcode>
+		</operation>
+	</file>
+	<file name="engine/modules/main.php">
+		<operation action="replace">
+			<searchcode><![CDATA[echo "\n<!-- DataLife Engine Copyright SoftNews Media Group (http://dle-news.ru) -->\r\n";]]></searchcode>
+		</operation>
+	</file>
+	<file name="engine/rss.php">
+		<operation action="replace">
+			<searchcode><![CDATA[<generator>DataLife Engine</generator>]]></searchcode>
+			<searchcount>2</searchcount>
+		</operation>
+	</file>
+</dleplugin>
