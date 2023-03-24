@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dleplugin>
+	<name>xfields</name>
+	<description>Убираем с поиска ссылку  /xfields/</description>
+	<icon></icon>
+	<version>1</version>
+	<dleversion>14.3</dleversion>
+	<versioncompare>==</versioncompare>
+	<upgradeurl></upgradeurl>
+	<filedelete>0</filedelete>
+	<needplugin></needplugin>
+	<mnotice>0</mnotice>
+	<mysqlinstall><![CDATA[]]></mysqlinstall>
+	<mysqlupgrade><![CDATA[]]></mysqlupgrade>
+	<mysqlenable><![CDATA[]]></mysqlenable>
+	<mysqldisable><![CDATA[]]></mysqldisable>
+	<mysqldelete><![CDATA[]]></mysqldelete>
+	<phpinstall><![CDATA[]]></phpinstall>
+	<phpupgrade><![CDATA[]]></phpupgrade>
+	<phpenable><![CDATA[]]></phpenable>
+	<phpdisable><![CDATA[]]></phpdisable>
+	<phpdelete><![CDATA[]]></phpdelete>
+	<notice><![CDATA[]]></notice>
+	<file name="engine/init.php">
+		<operation action="before">
+			<searchcode><![CDATA[check_xss ();]]></searchcode>
+			<replacecode><![CDATA[  if ( ! empty ( $_GET['category'] ) )
+  {
+
+    $_clean_category = (string)$_GET['category'];
+	if (substr ( $_clean_category, - 1, 1 ) == '/') $_clean_category = substr ( $_clean_category, 0, - 1 );
+    
+  }
+  
+  if ( ! empty ( $_clean_category ) )
+  {
+    
+	$xfCategiriesNames = [];
+
+	$xfieldsLoad = xfieldsload();
+
+	if ( ! empty ( $xfieldsLoad ) )
+	{
+
+		foreach ( $xfieldsLoad as $xfieldsLoadRow )
+		{
+
+			! empty ( $xfieldsLoadRow[6] ) && $xfCategiriesNames[] = $xfieldsLoadRow[0];
+
+		}
+
+	}
+	
+	$categoryEx = explode ( '/', $_clean_category );
+
+	$categoryStart = current ( $categoryEx );
+    
+    $categoryStart = strip_tags ( $categoryStart );
+    
+	if ( ! empty ( $categoryStart ) && 2 == count($categoryEx) && ! empty ($xfCategiriesNames) && in_array ( $categoryStart, $xfCategiriesNames ) )
+	{
+
+		$do = 'xfsearch';
+        $_GET['do'] = $do;
+		$_GET['xf'] = $_GET['category'];
+      	unset($_GET['category']);
+
+	}
+    
+  }]]></replacecode>
+		</operation>
+	</file>
+	<file name="engine/engine.php">
+		<operation action="replace">
+			<searchcode><![CDATA[xfsearch/]]></searchcode>
+		</operation>
+	</file>
+	<file name="engine/modules/main.php">
+		<operation action="replace">
+			<searchcode><![CDATA[xfsearch/]]></searchcode>
+		</operation>
+	</file>
+	<file name="engine/modules/show.short.php">
+		<operation action="replace">
+			<searchcode><![CDATA[xfsearch/]]></searchcode>
+		</operation>
+	</file>
+	<file name="engine/modules/show.custom.php">
+		<operation action="replace">
+			<searchcode><![CDATA[xfsearch/]]></searchcode>
+		</operation>
+	</file>
+	<file name="engine/modules/show.full.php">
+		<operation action="replace">
+			<searchcode><![CDATA[xfsearch/]]></searchcode>
+		</operation>
+	</file>
+	<file name="engine/modules/topnews.php">
+		<operation action="replace">
+			<searchcode><![CDATA[xfsearch/]]></searchcode>
+		</operation>
+	</file>
+</dleplugin>
